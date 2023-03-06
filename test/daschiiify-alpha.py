@@ -2,6 +2,10 @@ from iiif_prezi3 import Manifest, KeyValueString, ResourceItem, ProviderItem, Ex
 from datetime import datetime, timezone
 # import requests (for the DSP API)
 
+# A generic DasCH IIIF Manifest? 
+# Like standoff --> mapping for descriptive metadata / which types of resources are relevant?
+# 1) Single image 2) Compound object (through Gravsearch our friend)
+
 # The library documentation for generating IIIF resources that are compatible with the Presentation API 3.0 is accessible at https://iiif-prezi.github.io/iiif-prezi3/
 # IIIF Template: https://raw.githubusercontent.com/dasch-swiss/iiif-templates/main/boilerplates/boilerplate02.json 
 # ARK: https://ark.dasch.swiss/ark:/72163/1/0801/SRj_ydfRQTqkQnWnwHlodw4
@@ -36,7 +40,7 @@ manifest.summary = {"en": ["A very nice IIIF Resource provided by DaSCH"],
 hitem = HomepageItem(id=ark,type="Text",format="text/html",label={"en": ["Homepage for 1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"]},language=["en"])
 manifest.homepage = [hitem]
 
-### Appending descriptive Metadata, maybe a link to the project?
+### Appending descriptive Metadata, maybe a link to the project? / Permission!
 manifest.metadata = [
     KeyValueString(label={"en": ["Title"]}, value={"en": ["1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"]}),
     KeyValueString(label={"en": ["Recipient"]}, value={"en": ["Johann I Bernoulli"]}),
@@ -83,6 +87,9 @@ manifest.thumbnail = [thumbnail]
 
 
 ### Canvases - how to find the correct IIIF Image API URLs through DSP?
+
+# Resource > Representation > File ? 
+# IIIF Image API Info JSON: knora-api:fileValueAsUrl (but up to id.filename) + Canvas Label: knora-api:fileValueHasFilename	
 
 canvas1 = manifest.make_canvas_from_iiif(url=sipi+project+"/4VjgCwiTn8p-CTaooIqSZBO.jpx",
                                         label="1383232",
