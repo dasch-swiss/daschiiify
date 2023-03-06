@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 # A generic DasCH IIIF Manifest? 
 # Like standoff --> mapping for descriptive metadata / which types of resources are relevant?
-# 1) Single image 2) Compound object (through Gravsearch our friend)
+# 1) Single image 2) Compound object (through Gravsearch)
 
 # The library documentation for generating IIIF resources that are compatible with the Presentation API 3.0 is accessible at https://iiif-prezi.github.io/iiif-prezi3/
 # IIIF Template: https://raw.githubusercontent.com/dasch-swiss/iiif-templates/main/boilerplates/boilerplate02.json 
