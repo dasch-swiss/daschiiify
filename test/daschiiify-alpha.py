@@ -50,8 +50,8 @@ manifest.metadata = [
 
 ### Appending provider, pointing to the Registry of Organizations (ROR), the DaSCH website and its logo (yet, not available via IIIF)
 l = ResourceItem(id=daschlogo,type="Image",format="image/png",height=110,width=382)
-hdasch = HomepageItem(id=daschwww,type="Text",format="text/html",label={"en": ["DaSCH, Swiss National Data and Service Center for the Humanities"]})
-p = ProviderItem(id=rorid, label={"en": ["DaSCH, Swiss National Data and Service Center for the Humanities"]},homepage=[hdasch],logo=[l])
+hdasch = HomepageItem(id=daschwww,type="Text",format="text/html",label={"en": ["DaSCH – Swiss National Data and Service Center for the Humanities"]})
+p = ProviderItem(id=rorid, label={"en": ["DaSCH – Swiss National Data and Service Center for the Humanities"]},homepage=[hdasch],logo=[l])
 manifest.provider = [p]
 
 ### Appending a "seeAlso" property pointing the the DSP API
