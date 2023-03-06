@@ -5,7 +5,7 @@ The idea is to use the DaSCH Service Platform (DSP) API and the IIIF Image API 3
 
 ![High-level overview](overview.png)
 
-At the moment, an alpha script is in development to generate a particular IIIF resource, still waiting on how to leverage the DSP API in an efficient manner. 
+At the moment, an [alpha script](/test/daschiiify-alpha.py) is in development to generate a particular IIIF resource, still waiting on how to leverage the DSP API in an efficient manner. 
 
 ## Requirements
 - [ ] Populating the Presentation API resources through DSP API requests, possibly without using Gravsearch
