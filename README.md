@@ -1,5 +1,5 @@
 # daschiiify
-The prupose of this repository is to develop a script that can generate [IIIF Presentation API 3.0](https://iiif.io/api/presentation/3.0/) resources for DaSCH leveraging the [iiif-prezi3 library](https://iiif-prezi.github.io/iiif-prezi3/). 
+The purpose of this repository is to develop a script that can generate [IIIF Presentation API 3.0](https://iiif.io/api/presentation/3.0/) resources for DaSCH leveraging the [iiif-prezi3 library](https://iiif-prezi.github.io/iiif-prezi3/). 
 
 The idea is to use the DaSCH Service Platform (DSP) API and the IIIF Image API 3.0 — through our Simple Image Presentation Interface (SIPI) instance for populating the Presentation API 3.0 resources (mainly `Manifests` and `Collections`) and to upgrade the [experimental and outdated IIIF Manifests feature](https://docs.dasch.swiss/2023.02.02/DSP-API/03-endpoints/api-v2/reading-and-searching-resources/#iiif-manifests).
 
