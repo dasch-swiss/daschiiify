@@ -24,7 +24,7 @@ jsonnet==0.18.0
 jsonpath-ng==1.5.3
 jsonschema==4.4.0
 kiwisolver==1.4.4
-lxml==4.8.0
+lxml==4.9.1
 matplotlib==3.5.2
 mpmath==1.2.1
 numpy==1.22.3
