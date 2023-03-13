@@ -17,7 +17,7 @@ At the moment, an [alpha script](/test/daschiiify-alpha.py) is in development to
 - How to find easily which records (image-based, sound, video) can be genereated into IIIF resources?
 - What kind of assumptions should be done when we don't have the metadata (e.g. assuming `left-to-right` structural sequence for multi-page Manifests or rights metadata)?
 - Which descriptive metadata should be appended to the `metadata` property in our IIIF resources (all of them, a selection)?
-- Do we want to provide titles (`label`), descriptions (`summary`) and descriptive metadata (`metadata`) in multiple languages (cf. [Internationalization and Multi-language Values](https://iiif.io/api/cookbook/recipe/0006-text-language/))?
+- Do we want to provide titles (`label`), descriptions (`summary`) and descriptive metadata (`metadata`) in multiple languages (cf. [Internationalization and Multi-language Values](https://iiif.io/api/cookbook/recipe/0006-text-language/))? For the moment, it is done only in English. 
 - How should the `daschiiify` script be leveraged within the DaSCH infrastructure once it's stable?
 
 ## Templates
