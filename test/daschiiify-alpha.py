@@ -1,6 +1,5 @@
-from iiif_prezi3 import Manifest, KeyValueString, ResourceItem, ProviderItem, ExternalItem, HomepageItem
+from iiif_prezi3 import config, Manifest, KeyValueString, ResourceItem, ProviderItem, ExternalItem, HomepageItem
 from datetime import datetime, timezone
-# import requests (for the DSP API)
 
 # A generic DasCH IIIF Manifest? 
 # Like standoff --> mapping for descriptive metadata / which types of resources are relevant?
@@ -28,45 +27,46 @@ daschlogo = "https://static.wixstatic.com/media/b4d1f5_94a95cd2eab74c2289cbe1bed
 daschwww = "https://www.dasch.swiss/"
 rorid = "https://ror.org/047f01g80"
 
+### Language maps only in English
+config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
+
 ### Creation of the Manifest
 manifest = Manifest(id=manifestserver+dspid+"/manifest.json",
-                    label={"en": ["1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"]})
+                    label="1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I")
 
 ### Summary of the Resource
-manifest.summary = {"en": ["A very nice IIIF Resource provided by DaSCH"],
-                    "de": ["Etwas auf Deutsch"]}
+manifest.summary = ("A very nice IIIF Resource provided by DaSCH")
 
 ### Homepage of the Resource
-hitem = HomepageItem(id=ark,type="Text",format="text/html",label={"en": ["Homepage for 1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"]},language=["en"])
+hitem = HomepageItem(id=ark,type="Text",format="text/html",label="Homepage for 1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I")
 manifest.homepage = [hitem]
 
 ### Appending descriptive Metadata, maybe a link to the project? / Permission!
 manifest.metadata = [
-    KeyValueString(label={"en": ["Title"]}, value={"en": ["1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"]}),
-    KeyValueString(label={"en": ["Recipient"]}, value={"en": ["Johann I Bernoulli"]}),
-    KeyValueString(label={"en": ["Author"]}, value={"en": ["Giuseppe Verzaglia"]}),
-    KeyValueString(label={"en": ["Date of creation"]}, value={"en": ["GREGORIAN:1706-11-30 CE"]}),
-    KeyValueString(label={"en": ["Text"]}, value={"en": ["(...)"]}),
-    KeyValueString(label={"en": ["System number"]}, value={"en": ["000057769"]}),
-    KeyValueString(label={"en": ["Comment"]}, value={"en": ["Bologna"]}),
-    KeyValueString(label={"en": ["Mentioned person"]}, value={"en": ["Jakob I Bernoulli, Ismael Boulliau, John Craig, Jacob Hermann, Gottfried Wilhelm Leibniz, Vittorio Francesco Stancari, John Walli"]}),
+    KeyValueString(label="Title", value="1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"),
+    KeyValueString(label="Recipient", value="Johann I Bernoulli"),
+    KeyValueString(label="Author", value="Giuseppe Verzaglia"),
+    KeyValueString(label="Date of creation", value="GREGORIAN:1706-11-30 CE"),
+    KeyValueString(label="System number", value="000057769"),
+    KeyValueString(label="Comment", value="Bologna"),
+    KeyValueString(label="Mentioned person", value="Jakob I Bernoulli, Ismael Boulliau, John Craig, Jacob Hermann, Gottfried Wilhelm Leibniz, Vittorio Francesco Stancari, John Walli"),
 ]   
 
 ### Appending provider, pointing to the Registry of Organizations (ROR), the DaSCH website and its logo (yet, not available via IIIF)
 l = ResourceItem(id=daschlogo,type="Image",format="image/png",height=110,width=382)
-hdasch = HomepageItem(id=daschwww,type="Text",format="text/html",label={"en": ["DaSCH – Swiss National Data and Service Center for the Humanities"]})
-p = ProviderItem(id=rorid, label={"en": ["DaSCH – Swiss National Data and Service Center for the Humanities"]},homepage=[hdasch],logo=[l])
+hdasch = HomepageItem(id=daschwww,type="Text",format="text/html",label="DaSCH, Swiss National Data and Service Center for the Humanities")
+p = ProviderItem(id=rorid, label="DaSCH, Swiss National Data and Service Center for the Humanities",homepage=[hdasch],logo=[l])
 manifest.provider = [p]
 
 ### Appending a "seeAlso" property pointing the the DSP API
-s = ExternalItem(id=api+"resources/http%3A%2F%2Frdfh.ch%2F0801%2FSRj_ydfRQTqkQnWnwHlodw", format="application/ld+json", type="Dataset", label={"en": ["DaSCH Service Platform (DSP) API V2"]})
+s = ExternalItem(id=api+"resources/http%3A%2F%2Frdfh.ch%2F0801%2FSRj_ydfRQTqkQnWnwHlodw", format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
 manifest.seeAlso = [s]
 
 ### We don't have rights metadata in DSP for this record
 manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
 
 ### This could be serialised differently, also related to rights metadata
-manifest.requiredStatement = KeyValueString(label={"en": ["Attribution"]}, value={"en": ["Provided by DaSCH. Public Domain Mark 1.0 - No Known Copyright"]})
+manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH. Public Domain Mark 1.0 - No Known Copyright")
 
 ### We don't have such metadata but by default, we could assume that is left-to-right
 manifest.viewingDirection = "left-to-right"
