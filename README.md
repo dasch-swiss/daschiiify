@@ -11,7 +11,7 @@ At the moment, an [alpha script](/test/daschiiify-alpha.py) is in development to
 - [ ] Populating the Presentation API resources through DSP API requests, possibly without reyling too much on Gravsearch, a Virtual Graph Serch (cf. https://doi.org/10.3233/SW-200386)
 - [ ] Finding the correct IIIF Image API URLs to build the series of `Canvas`
 - [ ] IIIF Manifests and Collections should have their own subdomain (e.g. `https://daschiiify.dasch.swiss/`) and they should not be stored where the DSP API lives
-- [ ] The DaSCH logo should ideally be served through our SIPI instance
+- [x] The DaSCH logo should ideally be served through our SIPI instance
 
 ## Open questions
 - How to find easily which records (image-based, sound, video) can be genereated into IIIF resources?

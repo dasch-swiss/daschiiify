@@ -23,7 +23,7 @@ ark = "https://ark.dasch.swiss/ark:/72163/1/0801/SRj_ydfRQTqkQnWnwHlodw4"
 
 ### DSP and DaSCH Website
 api = "https://api.dasch.swiss/v2/"
-daschlogo = "https://static.wixstatic.com/media/b4d1f5_94a95cd2eab74c2289cbe1bed4fd0dc2~mv2.png"
+daschlogo = "https://iiif.dasch.swiss/0810/7WumAIYuJsQ-CroJQljo3CV.jp2/full/max/0/default.jpg"
 daschwww = "https://www.dasch.swiss/"
 rorid = "https://ror.org/047f01g80"
 
@@ -52,8 +52,11 @@ manifest.metadata = [
     KeyValueString(label="Mentioned person", value="Jakob I Bernoulli, Ismael Boulliau, John Craig, Jacob Hermann, Gottfried Wilhelm Leibniz, Vittorio Francesco Stancari, John Walli"),
 ]   
 
-### Appending provider, pointing to the Registry of Organizations (ROR), the DaSCH website and its logo (yet, not available via IIIF)
-l = ResourceItem(id=daschlogo,type="Image",format="image/png",height=110,width=382)
+### Appending provider, pointing to the Registry of Organizations (ROR), the DaSCH website and its logo
+l = ResourceItem(id=daschlogo,type="Image",format="image/jpg",height=209,width=557)
+l.make_service(id="https://iiif.dasch.swiss/0810/7WumAIYuJsQ-CroJQljo3CV.jp2",
+                    type="ImageService3",
+                    profile="level2")
 hdasch = HomepageItem(id=daschwww,type="Text",format="text/html",label="DaSCH, Swiss National Data and Service Center for the Humanities")
 p = ProviderItem(id=rorid, label="DaSCH, Swiss National Data and Service Center for the Humanities",homepage=[hdasch],logo=[l])
 manifest.provider = [p]
