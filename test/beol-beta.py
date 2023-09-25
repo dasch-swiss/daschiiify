@@ -22,7 +22,7 @@ internal_link = ""
 internal_id = ""
 manifest_id = ""
 still_image_id = ""
-ark_id = "" - # see https://github.com/dasch-swiss/ark-resolver/blob/master/src/base64url_check_digit.py
+ark_id = ""
 
 ### Language maps only in English
 config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
@@ -85,8 +85,8 @@ manifest.thumbnail = [thumbnail]
 canvas_id = 1
 canvas = manifest.make_canvas_from_iiif(url=sipi+project+still_image_id,
                                         label="1383232",
-                                        id=manifest_server + manifest_id + "/canvas/"+"p"+canvas_id",
-                                        anno_id=manifest_server + manifest_id + "/annotation/p0001-image",
+                                        id=manifest_server + manifest_id + "/canvas/"+"p"+canvas_id,
+                                        anno_id=manifest_server + manifest_id + "/annotation/p"+canvas_id+"image",
                                         anno_page_id=manifest_server + manifest_id + "/page/p"+canvas_id+"/1")
 
 print(manifest.json(indent=2))
