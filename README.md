@@ -8,9 +8,9 @@ The idea is to use the DaSCH Service Platform (DSP) API and the IIIF Image API 3
 At the moment, an [alpha script](/test/daschiiify-alpha.py) is in development to generate a particular IIIF resource, still waiting on how to leverage the DSP API in an efficient manner. 
 
 ## Requirements
-- [ ] Populating the Presentation API resources through DSP API requests, possibly without reyling too much on Gravsearch, a Virtual Graph Serch (cf. https://doi.org/10.3233/SW-200386)
+- [ ] Populating the Presentation API resources through DSP API requests, possibly without reyling too much on Gravsearch, a Virtual Graph Search (cf. https://doi.org/10.3233/SW-200386)
 - [ ] Finding the correct IIIF Image API URLs to build the series of `Canvas`
-- [ ] IIIF Manifests and Collections should have their own subdomain (e.g. `https://daschiiify.dasch.swiss/`) and they should not be stored where the DSP API lives
+- [ ] IIIF Manifests and Collections should have their own subdomain (e.g. `https://manifests.dasch.swiss/`) and they should not be stored where the DSP API lives
 - [x] The DaSCH logo should ideally be served through our SIPI instance
 
 ## Open questions
