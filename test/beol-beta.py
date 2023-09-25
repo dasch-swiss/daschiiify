@@ -1,25 +1,21 @@
+import pandas as pd
 from iiif_prezi3 import config, Manifest, KeyValueString, ResourceItem, ProviderItem, ExternalItem, HomepageItem
-from datetime import datetime, timezone
+# from datetime import datetime, timezone
 
-# A generic DasCH IIIF Manifest? 
-# Like standoff --> mapping for descriptive metadata / which types of resources are relevant?
-# 1) Single image 2) Compound object (through Gravsearch)
+### Script to generate BEOL IIIF Manifests based on a CSV which resulted from a SPARQL query.
 
-# The library documentation for generating IIIF resources that are compatible with the Presentation API 3.0 is accessible at https://iiif-prezi.github.io/iiif-prezi3/
-# IIIF Template: https://raw.githubusercontent.com/dasch-swiss/iiif-templates/main/boilerplates/boilerplate02.json 
-# ARK: https://ark.dasch.swiss/ark:/72163/1/0801/SRj_ydfRQTqkQnWnwHlodw4
-# IRI: http://rdfh.ch/0801/SRj_ydfRQTqkQnWnwHlodw 
-# DSP API Full Representation: https://api.dasch.swiss/v2/resources/http%3A%2F%2Frdfh.ch%2F0801%2FSRj_ydfRQTqkQnWnwHlodw
-# Compare with the experimental IIIF Manifest (https://api.dasch.swiss/v2/resources/iiifmanifest/http%3A%2F%2Frdfh.ch%2F0801%2FSRj_ydfRQTqkQnWnwHlodw)
+# Load the CSV data into a DataFrame
+csv_file_path = 'your_file.csv'
+data_frame = pd.read_csv(csv_file_path)
 
 ### IIIF Resource Servers
 sipi = "https://iiif.dasch.swiss/"
-manifestserver = "https://daschiiify.dasch.swiss/"
+manifestserver = "https://manifests.dasch.swiss/"
 
 ### Project and UUID - To be modified and queried from DSP
 project = "0801"
-dspid = "42"
-ark = "https://ark.dasch.swiss/ark:/72163/1/0801/SRj_ydfRQTqkQnWnwHlodw4"
+dspid = "" # to be found
+# ark = "" - see https://github.com/dasch-swiss/ark-resolver/blob/master/src/base64url_check_digit.py
 
 ### DSP and DaSCH Website
 api = "https://api.dasch.swiss/v2/"
@@ -31,11 +27,11 @@ rorid = "https://ror.org/047f01g80"
 config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
 
 ### Creation of the Manifest
-manifest = Manifest(id=manifestserver+dspid+"/manifest.json",
+manifest = Manifest(id=manifestserver+project+dspid+"/manifest.json",
                     label="1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I")
 
 ### Summary of the Resource
-manifest.summary = ("A very nice IIIF Resource provided by DaSCH")
+manifest.summary = ("A IIIF Resource provided by DaSCH")
 
 ### Homepage of the Resource
 hitem = HomepageItem(id=ark,type="Text",format="text/html",label="Homepage for 1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I")
@@ -62,27 +58,28 @@ p = ProviderItem(id=rorid, label="DaSCH, Swiss National Data and Service Center 
 manifest.provider = [p]
 
 ### Appending a "seeAlso" property pointing the the DSP API
-s = ExternalItem(id=api+"resources/http%3A%2F%2Frdfh.ch%2F0801%2FSRj_ydfRQTqkQnWnwHlodw", format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
-manifest.seeAlso = [s]
+# s = ExternalItem(id=api+"", format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
+# manifest.seeAlso = [s]
 
-### We don't have rights metadata in DSP for this record
-manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
+### Rights 
+# manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
 
-### This could be serialised differently, also related to rights metadata
-manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH. Public Domain Mark 1.0 - No Known Copyright")
+### Required Statement
+manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH.")
 
 ### We don't have such metadata but by default, we could assume that is left-to-right
 manifest.viewingDirection = "left-to-right"
 
-manifest.navDate = datetime(1706, 11, 30, tzinfo=timezone.utc)
+# navDate
+# manifest.navDate = datetime(YYYY, MM, DD, tzinfo=timezone.utc)
 
 ### Thumbnail
 
-thumbnail = ResourceItem(id=sipi+project+"/4VjgCwiTn8p-CTaooIqSZBO.jpx/full/80,/0/default.jpg",
+thumbnail = ResourceItem(id=sipi+project+stillImageInternalFilename+"/full/80,/0/default.jpg",
                          type="Image",
                          format="image/jpeg")
 
-thumbnail.make_service(id=sipi+project+"/4VjgCwiTn8p-CTaooIqSZBO.jpx",
+thumbnail.make_service(id=sipi+project+stillImageInternalFilename,
                        type="ImageService3",
                        profile="level2")
 
