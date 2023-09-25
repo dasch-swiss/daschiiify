@@ -42,11 +42,7 @@ manifest.homepage = [hitem]
 manifest.metadata = [
     KeyValueString(label="Title", value="1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"),
     KeyValueString(label="Recipient", value="Johann I Bernoulli"),
-    KeyValueString(label="Author", value="Giuseppe Verzaglia"),
-    KeyValueString(label="Date of creation", value="GREGORIAN:1706-11-30 CE"),
     KeyValueString(label="System number", value="000057769"),
-    KeyValueString(label="Comment", value="Bologna"),
-    KeyValueString(label="Mentioned person", value="Jakob I Bernoulli, Ismael Boulliau, John Craig, Jacob Hermann, Gottfried Wilhelm Leibniz, Vittorio Francesco Stancari, John Walli"),
 ]   
 
 ### Provider and Logo
