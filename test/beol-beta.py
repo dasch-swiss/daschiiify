@@ -2,8 +2,6 @@ import pandas as pd
 from iiif_prezi3 import config, Manifest, KeyValueString, ResourceItem, ProviderItem, ExternalItem, HomepageItem
 # from datetime import datetime, timezone
 
-### Script to generate BEOL IIIF Manifests based on a CSV which resulted from a SPARQL query.
-
 # Load the CSV data into a DataFrame
 csv_file_path = 'beol.csv'
 data_frame = pd.read_csv(csv_file_path)
@@ -32,7 +30,7 @@ manifest = Manifest(id=manifest_server+"/"+project+"/"+manifest_id+"/manifest.js
 
 ### Label, Summary of the Resource
 manifest.label = ("A IIIF Resource provided by DaSCH")
-manifest.summary = ("A IIIF Resource provided by DaSCH")
+manifest.summary = ("A IIIF Resource from the BEOL project provided by DaSCH, Swiss National Data and Service Center for the Humanities.")
 
 ### Homepage of the Resource
 hitem = HomepageItem(id=ark_id,type="Text",format="text/html",label="Homepage")
@@ -40,9 +38,10 @@ manifest.homepage = [hitem]
 
 ### Descriptive Metadata
 manifest.metadata = [
-    KeyValueString(label="Title", value="1706-11-30_Verzaglia_Giuseppe-Bernoulli_Johann_I"),
-    KeyValueString(label="Recipient", value="Johann I Bernoulli"),
-    KeyValueString(label="System number", value="000057769"),
+    KeyValueString(label="Title", value="partOfTitleStr"),
+    KeyValueString(label="Author", value="Value J"),
+    KeyValueString(label="Recipient", value="Value I"),
+    KeyValueString(label="System number", value="Value K"),
 ]   
 
 ### Provider and Logo
@@ -59,7 +58,7 @@ manifest.provider = [p]
 # manifest.seeAlso = [s]
 
 ### Required Statement and Rights
-manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH.")
+manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH")
 # manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
 
 ### Directionality - we don't have such metadata but by default, we could assume that is left-to-right
