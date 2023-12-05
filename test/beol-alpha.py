@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 ### IIIF Resource Servers
 sipi = "https://iiif.dasch.swiss/"
-manifestserver = "https://manifests.dasch.swiss/"
+manifestserver = "https://iiif-manifest.dasch.swiss/"
 
 ### Project and UUID - To be modified and queried from DSP
 project = "0801"

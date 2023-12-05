@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from iiif_prezi3 import Manifest, Canvas, KeyValueString, ResourceItem, ExternalItem, ProviderItem, HomepageItem, config
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 
 # Set auto_lang to English
 config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
@@ -53,13 +53,22 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
 
     # Add descriptive metadata to the manifest
     metadata_items = []
-    metadata_items.append(KeyValueString(label="Title", value={"en": [group['partOfTitleStr'].iloc[0]]}))
-    if 'J' in group.columns and not pd.isna(group['J'].iloc[0]):
-        metadata_items.append(KeyValueString(label="Author", value={"en": [group['J'].iloc[0]]}))
-    if 'I' in group.columns and not pd.isna(group['I'].iloc[0]):
-        metadata_items.append(KeyValueString(label="Recipient", value={"en": [group['I'].iloc[0]]}))
-    if 'K' in group.columns and not pd.isna(group['K'].iloc[0]):
-        metadata_items.append(KeyValueString(label="System number", value={"en": [group['K'].iloc[0]]}))
+
+    title = group['partOfTitleStr'].iloc[0]
+    if not pd.isna(title):
+        metadata_items.append(KeyValueString(label="Title", value=[title]))
+
+    author = group['hasAuthorLabel'].iloc[0]
+    if not pd.isna(author):
+        metadata_items.append(KeyValueString(label="Author", value=[author]))
+
+    recipient = group['hasRecipientLabel'].iloc[0]
+    if not pd.isna(recipient):
+        metadata_items.append(KeyValueString(label="Recipient", value=[recipient]))
+
+    system_number = group['sytemNumberStr'].iloc[0]
+    if not pd.isna(system_number):
+        metadata_items.append(KeyValueString(label="System number", value=[system_number]))
 
     # Check if metadata_items is not empty before setting manifest metadata
     if metadata_items:
@@ -107,10 +116,15 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
 
     # Set the thumbnail for the manifest
     if thumbnail:
-        manifest.thumbnail = [thumbnail]
+        manifest.thumbnail = [thumbnail] 
 
-    # Extract a valid filename from the manifest_id URL
+    # Add the seeAlso property
+    encoded_partOf = quote(row['partOf'], safe='')
+    external_item_id = f"{dsp_api}resources/{encoded_partOf}"
+    s = ExternalItem(id=external_item_id, format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
+    manifest.seeAlso = [s]
+
+    # Save the manifest as a JSON file in the 'data' directory
     filename = os.path.basename(manifest_id)
-    # Save the manifest as a JSON file in the 'manifests' directory
     with open(os.path.join(output_dir, f'{filename}.json'), 'w') as json_file:
         json_file.write(manifest.json(indent=2))  # Write the JSON data with indentation
