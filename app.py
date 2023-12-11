@@ -4,7 +4,7 @@ import os
 
 # Flask app setup
 app = Flask(__name__)
-csv_file_path = 'path/to/beol.csv'  # Update this path to where beol.csv is stored
+csv_file_path = 'beol.csv'  # Update this path to where beol.csv is stored
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
