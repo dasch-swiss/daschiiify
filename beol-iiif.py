@@ -7,7 +7,7 @@ from urllib.parse import urlparse, quote
 # Adding argument parsing for manifest_server
 parser = argparse.ArgumentParser(description='Generate IIIF resources.')
 parser.add_argument('--csv', type=str, help='Path to the CSV file')
-parser.add_argument('--manifest_server', type=str, help='Manifest server URL', default='https://default_manifest_server.url/')
+parser.add_argument('--manifest_server', type=str, help='Manifest server URL', default='https://iiif-manifest.dasch.swiss/')
 args = parser.parse_args()
 
 # Use the provided manifest_server URL or default
@@ -15,15 +15,6 @@ manifest_server = args.manifest_server
 
 # Set auto_lang to English
 config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
-
-# Ensure 'manifests' directory exists
-output_dir = 'data'
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-# Load the CSV data into a DataFrame
-csv_file_path = 'beol.csv'
-data_frame = pd.read_csv(csv_file_path)
 
 # Base URLs for components
 sipi_url = 'https://iiif.dasch.swiss/' 
@@ -35,6 +26,15 @@ project = '0801'  # The project identifier
 dasch_logo = 'https://iiif.dasch.swiss/0810/7WumAIYuJsQ-CroJQljo3CV.jp2'
 dasch_www = 'https://www.dasch.swiss/'
 dasch_ror = 'https://ror.org/047f01g80'
+
+# Ensure 'manifests' directory exists
+output_dir = f'data/{project}'
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+# Load the CSV data into a DataFrame
+csv_file_path = 'beol.csv'
+data_frame = pd.read_csv(csv_file_path)
 
 # Initialise the Canvas index
 canvas_index = 0
@@ -56,9 +56,9 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
 
     # Set common properties
     manifest.viewingDirection = "left-to-right"
-    manifest.requiredStatement = KeyValueString(label="Attribution", value="Provided by DaSCH")
     manifest.summary = ("A IIIF Resource from the BEOL project provided by DaSCH, Swiss National Data and Service Center for the Humanities.")
-    # manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
+    manifest.requiredStatement = KeyValueString(label="Attribution", value="IIIF Manifest created by DaSCH, digital surrogate provided by the University of Basel Library")
+    manifest.rights = "http://creativecommons.org/publicdomain/mark/1.0/"
 
     # Add descriptive metadata to the manifest
     metadata_items = []
@@ -79,6 +79,8 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     if not pd.isna(system_number):
         metadata_items.append(KeyValueString(label="System number", value=[system_number]))
 
+    metadata_items.append(KeyValueString(label="Project", value=f'<a href="{base_ark+project}" target="_blank">Bernoulli Euler Online (BEOL)</a>'))
+    
     # Check if metadata_items is not empty before setting manifest metadata
     if metadata_items:
         manifest.metadata = metadata_items
