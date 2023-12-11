@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template_string, send_from_directory, redirect, url_for
+from flask_cors import CORS  # Import the CORS extension
 import subprocess
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for the entire application
 csv_file_path = os.path.join(os.getcwd(), 'beol.csv')  # Adjust to the correct path of your CSV file
 project = '0801' # project identifier
 data_folder = f'data/{project}'  # Path to the data/project directory
@@ -60,10 +62,9 @@ def amend_json():
     subprocess.run(script_command, shell=True)
     return redirect(url_for('index'))
 
-@app.route('/data/<path:filename>')
+@app.route(f'/data/{project}/<path:filename>')
 def serve_data(filename):
     return send_from_directory(data_folder, filename)
 
 if __name__ == '__main__':
-    app.run(debug=True)
-#   app.run(debug=True, ssl_context=('cert.pem', 'key.pem'))    
+    app.run(debug=True, ssl_context=('cert.pem', 'key.pem'))    
