@@ -1,7 +1,17 @@
 import os
 import pandas as pd
+import argparse
 from iiif_prezi3 import Manifest, Canvas, KeyValueString, ResourceItem, ExternalItem, ProviderItem, HomepageItem, config
 from urllib.parse import urlparse, quote
+
+# Adding argument parsing for manifest_server
+parser = argparse.ArgumentParser(description='Generate IIIF resources.')
+parser.add_argument('--csv', type=str, help='Path to the CSV file')
+parser.add_argument('--manifest_server', type=str, help='Manifest server URL', default='https://default_manifest_server.url/')
+args = parser.parse_args()
+
+# Use the provided manifest_server URL or default
+manifest_server = args.manifest_server
 
 # Set auto_lang to English
 config.configs['helpers.auto_fields.AutoLang'].auto_lang = "en"
@@ -16,7 +26,6 @@ csv_file_path = 'beol.csv'
 data_frame = pd.read_csv(csv_file_path)
 
 # Base URLs for components
-manifest_server = 'https://iiif-manifest.dasch.swiss/' 
 sipi_url = 'https://iiif.dasch.swiss/' 
 base_ark = 'https://ark.dasch.swiss/ark:/72163/1/'
 dsp_api = 'https://api.dasch.swiss/v2/'
@@ -119,10 +128,10 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
         manifest.thumbnail = [thumbnail] 
 
     # Add the seeAlso property
-    encoded_partOf = quote(row['partOf'], safe='')
-    external_item_id = f"{dsp_api}resources/{encoded_partOf}"
-    s = ExternalItem(id=external_item_id, format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
-    manifest.seeAlso = [s]
+    # encoded_partOf = quote(row['partOf'].encode('utf-8'), safe='')
+    # external_item_id = f"{dsp_api}resources/{encoded_partOf}"
+    # s = ExternalItem(id=external_item_id, format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
+    # manifest.seeAlso = [s]
 
     # Save the manifest as a JSON file in the 'data' directory
     filename = os.path.basename(manifest_id)
