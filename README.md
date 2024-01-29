@@ -7,7 +7,7 @@ As a first experiment, IIIF Manifests have been created for the [Bernoulli-Euler
 
 ## Usage
 
-This repository includes a Python script (`beol.py`) designed to generate IIIF Presentation API 3.0 resources and a Flask web server (`app.py`) that serves as an interface for specifying the manifest server URL.
+This repository includes a Python script (`beol-iiif.py`) designed to generate IIIF Presentation API 3.0 resources and a Flask web server (`app.py`) that serves as an interface for specifying the manifest server URL.
 
 ### Setting Up
 
