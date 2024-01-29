@@ -15,7 +15,18 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
 
 ### Running the Flask Server
 
-1. **Start the Server**: Run `app.py` using Python. Ensure Flask is installed in your environment.
+1. **Generate a private key and a Self-Signed Certificate** Those files must remain hidden.
+   
+   Private key (`key.pem`)
+   ```bash
+   openssl genrsa -out key.pem 2048
+   ```
+   Certificate (`cert.pem`)
+   ```bash
+   openssl req -x509 -days 365 -key key.pem -in cert.csr -out cert.pem
+   ```
+
+2. **Start the Server**: Run `app.py` using Python. Ensure Flask is installed in your environment.
    ```bash
    python app.py
    ```
@@ -29,3 +40,13 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
 ### Output
 
 The generated IIIF manifests will be stored in the output directory specified in `beol.py`. The Flask server currently provides a confirmation response after processing. Future updates may include additional functionalities or output handling options.
+
+### Workaround for HTTPS URL Conversion
+
+In our current setup, the `beol-iiif.py` script designed to retrieve URLs from the DaSCH SIPI instance – a server compliant with the IIIF Image API – defaults to fetching URLs using the HTTP protocol. This behaviour can lead to mixed content issues when these URLs are used in a context that requires HTTPS. To address this, there is a workaround that involves running a Python script to convert these URLs from HTTP to HTTPS.
+
+   ```bash
+   python replace-sipi-url.py
+   ```
+
+After running the script, it's recommended to verify that the URLs have been correctly converted. Checking a few instances manually can ensure that the script has effectively performed the necessary changes.
