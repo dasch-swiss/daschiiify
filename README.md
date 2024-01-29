@@ -34,7 +34,7 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
 
 ### Using the Web Interface
 
-1. **Enter the Manifest Server URL**: Use the form to input the URL of the manifest server. This URL is used by `beol.py` to generate the IIIF manifests.
+1. **Enter the Manifest Server URL**: Use the form to input the URL of the manifest server. This URL is used by `beol-iiif.py` to generate the IIIF manifests.
 2. **Generate Resources**: Click the 'Generate' button to start the resource generation process. The script will use the provided `manifest_server` URL and the data from `beol.csv` to create IIIF manifests.
 
 ### Output
