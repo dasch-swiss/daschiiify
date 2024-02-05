@@ -53,7 +53,7 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     complete_id = extracted_id + check_digit
     
     # As we have our quite custom UUID, we need to replace - by = (see https://github.com/dasch-swiss/ark-resolver/blob/master/src/ark_url.py)
-    corrected_id = complete_id.replace('=', '-')
+    corrected_id = complete_id.replace('-', '=')
 
     # Manifest ID with the corrected escaped UUID with check digit
     manifest_id = f"{manifest_server}{project}/{corrected_id}"
