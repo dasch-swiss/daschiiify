@@ -59,7 +59,7 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     manifest = Manifest(id=manifest_url, label=manifest_label)
 
     # Archival Resource Key (ARK) ID using the homepage property 
-    homepage = [HomepageItem(id=f"{base_ark}{project}/{complete_id}", type="Text", format="text/html", label=f"Homepage of the {manifest_label} resource")]
+    manifest.homepage = [HomepageItem(id=f"{base_ark}{project}/{complete_id}", type="Text", format="text/html", label=f"Homepage of the {manifest_label} resource")]
 
     # Set common properties
     manifest.viewingDirection = "left-to-right"
