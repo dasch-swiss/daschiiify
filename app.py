@@ -38,7 +38,7 @@ def index():
             <input type="submit" value="Toggle File Generation">
         </form>
         <form method="post" action="{{ url_for('amend_json') }}">
-            <input type="submit" value="Amend JSON Files">
+            <input type="submit" value="Amend JSON Files by setting the correct HTTPS URL from SIPI">
         </form>
         <h2>Log Output</h2>
         <pre>{{ log_output }}</pre>

@@ -43,13 +43,20 @@ canvas_index = 0
 # Iterate through data and create manifests
 for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['img'])):
     group_key = partOf.split('/')[-1]
+    
     # Extract the identifier from the "partOf" URL
     parsed_url = urlparse(group_key)
     extracted_id = parsed_url.path.strip('/').split('/')[-1]
-    # Calculate complete ID with base64 check digit
+    
+    # Calculate complete ID with base64 check digit and replace 
     check_digit = calculate_check_digit(extracted_id)
     complete_id = extracted_id + check_digit
-    manifest_id = f"{manifest_server}{project}/{complete_id}"
+    
+    # As we have our quite custom UUID, we need to replace - by = (see https://github.com/dasch-swiss/ark-resolver/blob/master/src/ark_url.py)
+    corrected_id = complete_id('=', '-')
+
+    # Manifest ID with the corrected escaped UUID with check digit
+    manifest_id = f"{manifest_server}{project}/{corrected_id}"
     manifest_url = manifest_id+".json"
 
     # Determine the label for the manifest
@@ -59,7 +66,7 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     manifest = Manifest(id=manifest_url, label=manifest_label)
 
     # Archival Resource Key (ARK) ID using the homepage property 
-    manifest.homepage = [HomepageItem(id=f"{base_ark}{project}/{complete_id}", type="Text", format="text/html", label=f"Homepage of the {manifest_label} resource")]
+    manifest.homepage = [HomepageItem(id=f"{base_ark}{project}/{corrected_id}", type="Text", format="text/html", label=f"Homepage of the {manifest_label} resource")]
 
     # Set common properties
     manifest.viewingDirection = "left-to-right"
