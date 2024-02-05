@@ -3,6 +3,7 @@ import pandas as pd
 import argparse
 from iiif_prezi3 import Manifest, Canvas, KeyValueString, ResourceItem, ExternalItem, ProviderItem, HomepageItem, config
 from urllib.parse import urlparse, quote
+from base64url_check_digit import calculate_check_digit
 
 # Adding argument parsing for manifest_server
 parser = argparse.ArgumentParser(description='Generate IIIF resources.')
@@ -45,14 +46,20 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     # Extract the identifier from the "partOf" URL
     parsed_url = urlparse(group_key)
     extracted_id = parsed_url.path.strip('/').split('/')[-1]
-    manifest_id = f"{manifest_server}{project}/{extracted_id}"
+    # Calculate complete ID with base64 check digit
+    check_digit = calculate_check_digit(extracted_id)
+    complete_id = extracted_id + check_digit
+    manifest_id = f"{manifest_server}{project}/{complete_id}"
     manifest_url = manifest_id+".json"
 
     # Determine the label for the manifest
     manifest_label = group['partOfTitleStr'].iloc[0] if not pd.isna(group['partOfTitleStr'].iloc[0]) and group['partOfTitleStr'].iloc[0].strip() else group['stillImageUUID'].iloc[0]
 
     # Create a new manifest with the label
-    manifest = Manifest(id=manifest_url, label={"en": [manifest_label]})
+    manifest = Manifest(id=manifest_url, label=manifest_label)
+
+    # Archival Resource Key (ARK) ID using the homepage property 
+    homepage= HomepageItem(id=f"{base_ark}{project}/{complete_id}", type="Text", format="text/html", label=f"Homepage of the {manifest_label} resource")
 
     # Set common properties
     manifest.viewingDirection = "left-to-right"
@@ -79,7 +86,7 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     if not pd.isna(system_number):
         metadata_items.append(KeyValueString(label="System number", value=[system_number]))
 
-    metadata_items.append(KeyValueString(label="Project", value=f'<a href="{base_ark+project}" target="_blank">Bernoulli Euler Online (BEOL)</a>'))
+    metadata_items.append(KeyValueString(label="Project", value=f'<a href="{base_ark}{project}" target="_blank">Bernoulli Euler Online (BEOL)</a>'))
     
     # Check if metadata_items is not empty before setting manifest metadata
     if metadata_items:
@@ -129,7 +136,7 @@ for partOf, group in data_frame.groupby(data_frame['partOf'].fillna(data_frame['
     if thumbnail:
         manifest.thumbnail = [thumbnail] 
 
-    # Add the seeAlso property
+    # Add the seeAlso property that points to the DSP API representation
     # encoded_partOf = quote(row['partOf'].encode('utf-8'), safe='')
     # external_item_id = f"{dsp_api}resources/{encoded_partOf}"
     # s = ExternalItem(id=external_item_id, format="application/ld+json", type="Dataset", label="DaSCH Service Platform (DSP) API V2")
