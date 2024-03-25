@@ -47,7 +47,7 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
 2. **Generate Resources**: Click the 'Generate IIIF Resources' button to start the resource generation process. The script will use the provided `manifest_server` URL and the data from `beol.csv` to create IIIF Manifests.
 3. **Amend the JSON files**: In our current setup, the `beol-iiif.py` script designed to retrieve URLs from the DaSCH SIPI instance – a server compliant with the IIIF Image API – defaults to fetching URLs using the HTTP protocol. This behaviour can lead to mixed content issues when these URLs are used in a context that requires HTTPS. To address this, there is a workaround that involves running a Python script to convert these URLs from HTTP to HTTPS. By clicking on 'Amend JSON Files by setting the correct HTTPS URL from SIPI', the URLs are corrected by leveraging the `replace-sipi-url.py` script. 
 
-NB: To ensure that the IIIF Manifests are properly served locally, specify `https://127.0.0.1:5000/data` as the Manifest Server URL so that the URL and the IDs are similar.
+NB: To ensure that the IIIF Manifests are properly served locally, specify `https://127.0.0.1:5000/data/` as the Manifest Server URL so that the URL and the IDs are similar.
 
 ### Output
 
