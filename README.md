@@ -21,10 +21,19 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
    ```bash
    openssl genrsa -out key.pem 2048
    ```
-   Certificate (`cert.pem`)
+   This command generates a private key (key.pem) with a length of 2048 bits.
+
+   Create a Certificate Signing Request (CSR) using the private key generated in the previous step. Execute the following command (`cert.csr`):
+
+   ```bash
+   openssl req -new -key key.pem -out cert.csr
+   ```
+
+   Generate a self-signed certificate (`cert.pem`)
    ```bash
    openssl req -x509 -days 365 -key key.pem -in cert.csr -out cert.pem
    ```
+   This command will create a self-signed certificate valid for 365 days.
 
 2. **Start the Server**: Run `app.py` using Python. Ensure Flask is installed in your environment.
    ```bash
