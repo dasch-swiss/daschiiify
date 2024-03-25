@@ -1,5 +1,7 @@
 .DS_Store
-data/
 cert.pem
 cert.csr
 key.pem
+data/*/*
+!data/*/
+!data/*/**/

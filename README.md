@@ -39,7 +39,7 @@ Ensure `beol.csv` is placed in the specified location in `app.py`. This CSV file
    ```bash
    python app.py
    ```
-2. **Access the Server**: Open a web browser and navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000). This will display a simple user interface.
+3. **Access the Server**: Open a web browser and navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000). This will display a simple user interface.
 
 ### Using the Web Interface
 

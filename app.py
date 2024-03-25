@@ -6,9 +6,13 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for the entire application
 csv_file_path = os.path.join(os.getcwd(), 'beol.csv')  # Adjust to the correct path of your CSV file
-project = '0801' # project identifier
+project = '0801' # Default project identifier
 data_folder = f'data/{project}'  # Path to the data/project directory
 file_generation_enabled = True
+
+# Ensure 'data/0801' directory exists
+if not os.path.exists(data_folder):
+    os.makedirs(data_folder)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
