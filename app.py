@@ -26,7 +26,7 @@ def index():
 
     if request.method == 'POST' and file_generation_enabled:
         manifest_server = request.form['manifest_server']
-        script_command = f'/usr/local/bin/python3 beol-iiif.py --csv {csv_file_path} --manifest_server {manifest_server}'
+        script_command = f'python beol-iiif.py --csv {csv_file_path} --manifest_server {manifest_server}'
         
         # Execute the script and capture output
         result = subprocess.run(script_command, shell=True, capture_output=True, text=True)
@@ -67,7 +67,7 @@ def toggle_generation():
 
 @app.route('/amend-json', methods=['POST'])
 def amend_json():
-    script_command = f'/usr/local/bin/python3 replace-sipi-url.py'
+    script_command = f'python replace-sipi-url.py'
     subprocess.run(script_command, shell=True)
     return redirect(url_for('index'))
 
