@@ -37,7 +37,7 @@ ply==3.11
 protobuf==4.21.12
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pydantic==1.10.2
+pydantic==1.10.13
 PyLD==2.0.3
 pyparsing==2.4.7
 pyrsistent==0.18.1
