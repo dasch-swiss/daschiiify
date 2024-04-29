@@ -13,7 +13,7 @@ This repository includes a Python script and a Flask web server that serves as a
 
 1. **Prepare the Environment**: Clone the repository and navigate to the project directory.
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/dasch-swiss/daschiiify.git
    cd daschiiify
    ```
 
@@ -48,3 +48,5 @@ This repository includes a Python script and a Flask web server that serves as a
 ### Output
 
 The generated IIIF manifests are stored in the `data/0801` directory within the container, accessible through the Flask server. Future updates may include additional functionalities or output handling options.
+
+_For the moment, only IIIF Manifests for the BEOL project can be generated, but it is intended that the script will be amended to accomodate different projects hosted on the DaSCH Service Platform_
