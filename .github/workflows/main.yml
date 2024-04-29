@@ -1,0 +1,53 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Disk Free and Run daschiiify Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Disk Free
+        run: |
+          df -h
+          docker system df
+          docker system prune --all --force --volumes
+          df -h
+      - name: Run daschiiify unit tests
+        run: make test
+      - name: Disk Free After
+        run: |
+          df -h
+          docker system df
+
+  # Publish only for main branch and tags
+  publish:
+    name: Publish to Dockerhub
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 50
+      - name: Disk Free
+        run: |
+          df -h
+          docker system df
+          docker system prune --all --force --volumes
+          df -h
+      - name: Build and publish daschiiify Docker image to Dockerhub
+        run: |
+          echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
+          docker build --no-cache -t ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }} .
+          docker tag ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }} ${{ secrets.DOCKER_USER }}/daschiiify:latest
+          docker push ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_USER }}/daschiiify:latest
+      - name: Disk Free After
+        run: |
+          df -h
+          docker system df

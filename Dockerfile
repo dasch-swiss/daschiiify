@@ -23,7 +23,7 @@ EXPOSE 5000
 ENV NAME World
 
 # Add version label
-LABEL version="0.1"
+LABEL version="0.1.0"
 
 # Command to run the application using Gunicorn
 CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5000", "app:app", "--certfile=/certs/cert.pem", "--keyfile=/certs/key.pem"]
