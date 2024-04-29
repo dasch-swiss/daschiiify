@@ -45,6 +45,14 @@ This repository includes a Python script and a Flask web server that serves as a
 - **Generate Resources**: Click the 'Generate IIIF Resources' button to start the resource generation process using the specified `manifest_server` URL and data from `beol.csv`.
 - **Amend JSON Files**: Click 'Amend JSON Files by setting the correct HTTPS URL from SIPI' to adjust the URLs in the generated JSON files from HTTP to HTTPS, preventing mixed content issues.
 
+### Docker Image Build Process
+
+The Dockerfile provided in this repository uses a multi-stage build process to optimize the size of the final Docker image. It separates the build environment from the production environment, resulting in a smaller image size.
+
+- build_release: This stage sets up the build environment, installs dependencies, and prepares the application for production.
+- build_dev: In this stage, additional files specific to development, such as data directories, are added to the image.
+- Final Image Selection: The final image is selected based on the value of the `BUILD_ENV` argument provided during the build process. If `BUILD_ENV=release`, the build_release stage is used; otherwise, the `build_dev` stage is selected.
+
 ### Output
 
 The generated IIIF manifests are stored in the `data/0801` directory within the container, accessible through the Flask server. Future updates may include additional functionalities or output handling options.
