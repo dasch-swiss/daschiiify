@@ -1,9 +1,4 @@
 #!/usr/bin/env python
-# Before running this script, activate your virtual environment:
-#   source venv/bin/activate (on Unix-like systems)
-#   venv\Scripts\activate (on Windows)
-
-#!/usr/bin/env python
 from flask import Flask, request, render_template_string, send_from_directory, redirect, url_for
 from flask_cors import CORS
 import subprocess
