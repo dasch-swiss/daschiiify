@@ -43,10 +43,10 @@ jobs:
       - name: Build and publish daschiiify Docker image to Dockerhub
         run: |
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
-          docker build --no-cache -t ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }} .
-          docker tag ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }} ${{ secrets.DOCKER_USER }}/daschiiify:latest
-          docker push ${{ secrets.DOCKER_USER }}/daschiiify:${{ github.ref_name }}
-          docker push ${{ secrets.DOCKER_USER }}/daschiiify:latest
+          docker build --no-cache -t daschswiss/daschiiify:${{ github.ref_name }} .
+          docker tag daschswiss/daschiiify:${{ github.ref_name }} daschswiss/daschiiify:latest
+          docker push daschswiss/daschiiify:${{ github.ref_name }}
+          docker push daschswiss/daschiiify:latest
       - name: Disk Free After
         run: |
           df -h
