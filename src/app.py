@@ -16,7 +16,7 @@ file_generation_enabled = True
 
 # Ensure 'data/0801' directory exists
 if not os.path.exists(data_folder):
-    os.makedirs(data_folder)
+    os.makedirs(data_folder, exist_ok=True)  # Using exist_ok=True to avoid FileExistsError
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -72,10 +72,8 @@ def amend_json():
 
 @app.route(f'/data/{project}/<path:filename>')
 def serve_data(filename):
-    # Updated the path to use the correct relative directory
-    return send_from_directory(os.path.join(BASE_DIR, f'../data/{project}'), filename)
+    return send_from_directory(data_folder, filename)  # Simplified path handling
 
 if __name__ == '__main__':
-    # Path to the SSL certificates directly from the root since they are in /certs
-    ssl_context = ('/certs/cert.pem', '/certs/key.pem')
+    ssl_context = ('/certs/cert.pem', '/certs/key.pem')  # Correct path to SSL certificates
     app.run(debug=True, ssl_context=ssl_context, host='0.0.0.0', port=5000)
