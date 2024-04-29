@@ -9,9 +9,9 @@ CORS(app)
 
 # Set paths relative to the current script location
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-csv_file_path = os.path.join(BASE_DIR, '../data/beol.csv')  # Correct path to CSV
+csv_file_path = os.path.join(BASE_DIR, 'data/beol.csv')  # Correct path to CSV
 project = '0801'
-data_folder = os.path.join(BASE_DIR, f'../data/{project}')  # Corrected path to the project-specific data directory
+data_folder = os.path.join(BASE_DIR, f'data/{project}')  # Corrected path to the project-specific data directory
 file_generation_enabled = True
 
 # Ensure 'data/0801' directory exists
