@@ -46,7 +46,6 @@ jobs:
           docker build --no-cache -t daschswiss/daschiiify:${{ github.ref_name }} .
           docker tag daschswiss/daschiiify:${{ github.ref_name }} daschswiss/daschiiify:latest
           docker push daschswiss/daschiiify:${{ github.ref_name }}
-          docker push daschswiss/daschiiify:latest
       - name: Disk Free After
         run: |
           df -h
