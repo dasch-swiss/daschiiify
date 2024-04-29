@@ -76,6 +76,6 @@ def serve_data(filename):
     return send_from_directory(os.path.join(BASE_DIR, f'../data/{project}'), filename)
 
 if __name__ == '__main__':
-    # Path to the SSL certificates in the certs directory
-    ssl_context = (os.path.join(BASE_DIR, '../certs/cert.pem'), os.path.join(BASE_DIR, '../certs/key.pem'))
-    app.run(debug=True, ssl_context=ssl_context)  
+    # Path to the SSL certificates directly from the root since they are in /certs
+    ssl_context = ('/certs/cert.pem', '/certs/key.pem')
+    app.run(debug=True, ssl_context=ssl_context, host='0.0.0.0', port=5000)
