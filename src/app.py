@@ -7,11 +7,10 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Set paths relative to the current script location
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-csv_file_path = os.path.join(BASE_DIR, 'data/beol.csv')  # Correct path to CSV
+# Set absolute paths for the data
+csv_file_path = '/data/beol.csv'  # Absolute path to CSV in Docker
 project = '0801'
-data_folder = os.path.join(BASE_DIR, f'data/{project}')  # Corrected path to the project-specific data directory
+data_folder = '/data/0801'  # Absolute path to project-specific data directory
 file_generation_enabled = True
 
 # Ensure 'data/0801' directory exists
@@ -25,7 +24,7 @@ def index():
 
     if request.method == 'POST' and file_generation_enabled:
         manifest_server = request.form['manifest_server']
-        script_command = f'python beol-iiif.py --csv "{csv_file_path}" --manifest_server "{manifest_server}"'
+        script_command = f'python /src/beol-iiif.py --csv "{csv_file_path}" --manifest_server "{manifest_server}"'
         
         # Execute the script and capture output
         result = subprocess.run(script_command, shell=True, capture_output=True, text=True)
@@ -66,13 +65,13 @@ def toggle_generation():
 
 @app.route('/amend-json', methods=['POST'])
 def amend_json():
-    script_command = 'python replace-sipi-url.py'
+    script_command = 'python /src/replace-sipi-url.py'
     subprocess.run(script_command, shell=True)
     return redirect(url_for('index'))
 
 @app.route(f'/data/{project}/<path:filename>')
 def serve_data(filename):
-    return send_from_directory(data_folder, filename)  # Simplified path handling
+    return send_from_directory('/data/0801', filename)
 
 if __name__ == '__main__':
     ssl_context = ('/certs/cert.pem', '/certs/key.pem')  # Correct path to SSL certificates
