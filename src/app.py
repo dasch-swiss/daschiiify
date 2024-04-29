@@ -71,6 +71,8 @@ def amend_json():
 
 @app.route(f'/data/{project}/<path:filename>')
 def serve_data(filename):
+    if filename.endswith('.DS_Store'):
+        return "Access denied", 403  # Block access to .DS_Store files
     return send_from_directory('/data/0801', filename)
 
 if __name__ == '__main__':
