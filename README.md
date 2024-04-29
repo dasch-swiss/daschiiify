@@ -17,17 +17,23 @@ This repository includes a Python script and a Flask web server that serves as a
    cd daschiiify
    ```
 
-2. **Install Dependencies**: Make sure Python and Docker are installed on your system. Build the Docker image using the provided Dockerfile.
-   ```bash
-   docker build -t daschiiify .
-   ```
-
-3. **Prepare SSL Certificates**: The server uses HTTPS, so you'll need to generate a private key and a self-signed certificate. Store these in the `certs` directory.
+2. **Prepare SSL Certificates**: The server uses HTTPS, so you'll need to generate a private key and a self-signed certificate. Store these in the `certs` directory.
    ```bash
    mkdir -p certs
    openssl genrsa -out certs/key.pem 2048
    openssl req -new -key certs/key.pem -out certs/cert.csr
    openssl req -x509 -days 365 -key certs/key.pem -in certs/cert.csr -out certs/cert.pem
+   ```
+
+3. **Install Dependencies**: Make sure Python and Docker are installed on your system. Build the Docker image using the provided Dockerfile.
+   ```bash
+   docker build -t daschiiify .
+   ```
+
+   **Building locally** with the build environment
+   
+   ```bash
+   docker build --build-arg BUILD_ENV=dev -t daschiiify .
    ```
 
 ### Running the Flask Server
