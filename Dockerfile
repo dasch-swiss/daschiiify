@@ -7,9 +7,6 @@ WORKDIR /src
 COPY src/ ./
 COPY requirements.txt .
 
-# Copy certificates
-COPY certs/ /certs/
-
 # Copy the data directory into the container at the correct path
 COPY data/ /data/
 
@@ -26,4 +23,4 @@ ENV NAME World
 LABEL version="0.1.0"
 
 # Command to run the application using Gunicorn
-CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5000", "app:app", "--certfile=/certs/cert.pem", "--keyfile=/certs/key.pem"]
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5000", "app:app"]
