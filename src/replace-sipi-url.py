@@ -40,7 +40,7 @@ def replace_url_in_json_files(directory, old_url, new_url):
 
 # Project identifier and directory path
 project = '0801'
-directory = f'../data/{project}'  # Directory containing JSON files
+directory = os.path.join(os.path.dirname(__file__), '..', 'data', project)
 old_url = 'http://iiif.dasch.swiss/'
 new_url = 'https://iiif.dasch.swiss/'
 
