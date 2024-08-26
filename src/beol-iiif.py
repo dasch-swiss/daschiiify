@@ -29,12 +29,12 @@ dasch_www = 'https://www.dasch.swiss/'
 dasch_ror = 'https://ror.org/047f01g80'
 
 # Ensure 'manifests' directory exists
-output_dir = f'../data/{project}'
+output_dir = os.path.join(os.path.dirname(__file__), '..', 'data', project)
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 # Load the CSV data into a DataFrame
-csv_file_path = '../data/beol.csv'
+csv_file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'beol.csv')
 data_frame = pd.read_csv(csv_file_path)
 
 # Initialise the Canvas index
