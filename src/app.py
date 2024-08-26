@@ -7,10 +7,11 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Set absolute paths for the data
-csv_file_path = '/data/beol.csv'  # Absolute path to CSV in Docker
+# Set relative paths for the data
 project = '0801'
-data_folder = '/data/0801'  # Absolute path to project-specific data directory
+base_dir = os.path.dirname(__file__)
+csv_file_path = os.path.join(base_dir, '..', 'data', 'beol.csv')  # Relative path to CSV
+data_folder = os.path.join(base_dir, '..', 'data', project)  # Relative path to project-specific data directory
 file_generation_enabled = True
 
 # Ensure 'data/0801' directory exists
@@ -24,7 +25,7 @@ def index():
 
     if request.method == 'POST' and file_generation_enabled:
         manifest_server = request.form['manifest_server']
-        script_command = f'python /src/beol-iiif.py --csv "{csv_file_path}" --manifest_server "{manifest_server}"'
+        script_command = f'python {os.path.join(base_dir, "beol-iiif.py")} --csv "{csv_file_path}" --manifest_server "{manifest_server}"'
         
         # Execute the script and capture output
         result = subprocess.run(script_command, shell=True, capture_output=True, text=True)
@@ -65,7 +66,7 @@ def toggle_generation():
 
 @app.route('/amend-json', methods=['POST'])
 def amend_json():
-    script_command = 'python /src/replace-sipi-url.py'
+    script_command = f'python {os.path.join(base_dir, "replace-sipi-url.py")}'
     subprocess.run(script_command, shell=True)
     return redirect(url_for('index'))
 
@@ -73,8 +74,11 @@ def amend_json():
 def serve_data(filename):
     if filename.endswith('.DS_Store'):
         return "Access denied", 403  # Block access to .DS_Store files
-    return send_from_directory('/data/0801', filename)
+    return send_from_directory(data_folder, filename)
 
 if __name__ == '__main__':
-    ssl_context = ('/certs/cert.pem', '/certs/key.pem')  # Correct path to SSL certificates
+    ssl_context = (
+        os.path.join(base_dir, '..', 'certs', 'cert.pem'),
+        os.path.join(base_dir, '..', 'certs', 'key.pem')
+    )  # Correct path to SSL certificates
     app.run(debug=True, ssl_context=ssl_context, host='0.0.0.0', port=5000)
